@@ -1,6 +1,10 @@
 cmake_minimum_required(VERSION 3.16)
-project(core VERSION 0.0.1)
+project(Core)
+set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 
-set(CMAKE_CXX_STANDARD 17)
+find_package(Poco CONFIG REQUIRED COMPONENTS Json)
 
-add_library(core SHARED library.cc library.h)
+add_library(CoreLib STATIC Core.cc game/GameProcessor.cc misc/SessionConfiguration.cc misc/SessionConfigurationParser.cc
+network/auth/AuthConfiguration.cc network/auth/AuthService.cc network/RequestService.cc game/GameSession.cc 
+game/GameSessionFactory.cc)
+target_link_libraries(CoreLib PRIVATE Poco::JSON)
