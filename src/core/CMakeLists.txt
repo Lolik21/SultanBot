@@ -8,3 +8,4 @@ add_library(CoreLib STATIC Core.cc game/GameProcessor.cc misc/SessionConfigurati
 network/auth/AuthConfiguration.cc network/auth/AuthService.cc network/RequestService.cc game/GameSession.cc 
 game/GameSessionFactory.cc)
 target_link_libraries(CoreLib PRIVATE Poco::JSON)
+target_include_directories(CoreLib PRIVATE ./)
