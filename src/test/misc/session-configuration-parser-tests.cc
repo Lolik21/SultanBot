@@ -1,5 +1,5 @@
 #include <boost/test/unit_test.hpp>
-#include <misc/SessionConfigurationParser.h>
+#include <misc/session-configuration-parser.h>
 
 namespace misc {
 BOOST_AUTO_TEST_SUITE(SessionConfigurationParserTests)

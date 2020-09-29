@@ -1,4 +1,4 @@
-#include "SessionConfiguration.h"
+#include "session-configuration.h"
 #include <Poco/JSON/Object.h>
 
 namespace misc {

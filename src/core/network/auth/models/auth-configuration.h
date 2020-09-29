@@ -1,12 +1,17 @@
 #ifndef CORE_MISC_AUTH_CONFIGURATION_H_
 #define CORE_MISC_AUTH_CONFIGURATION_H_
 
-#include "../../misc/SessionConfiguration.h"
+#include "misc/session-configuration.h"
 
-namespace network::auth {
+#include <memory>
+#include <string>
+
+namespace network::auth::models {
   class AuthConfiguration {
    public:
     AuthConfiguration(std::shared_ptr<misc::SessionConfiguration> session_configuration);
+
+    std::string region_id;
   };
 }
 

@@ -2,7 +2,7 @@
 #define SULTANBOT_CORE_GAME_GAME_PROCESSOR_H_
 
 #include <string>
-#include "../misc/SessionConfiguration.h"
+#include "misc/session-configuration.h"
 
 namespace game {
 class GameProcessor {

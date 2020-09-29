@@ -1,6 +1,6 @@
 find_package(Boost COMPONENTS unit_test_framework REQUIRED)
 
-add_executable(CoreLibTests UnitTestModule.cc misc/SessionConfigurationParserTests.cc)
+add_executable(CoreLibTests "unit-test-module.cc" "misc/session-configuration-parser-tests.cc")
 
 target_link_libraries(CoreLibTests PRIVATE ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
 target_link_libraries(CoreLibTests PRIVATE CoreLib)

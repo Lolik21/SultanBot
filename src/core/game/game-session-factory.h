@@ -1,8 +1,8 @@
 #ifndef CORE_GAME_GAME_SESSION_FACTORY
 #define CORE_GAME_GAME_SESSION_FACTORY
 
-#include "GameSession.h"
-#include "../misc/SessionConfiguration.h"
+#include "game-session.h"
+#include "misc/session-configuration.h"
 
 namespace game
 {

@@ -1,7 +1,7 @@
-#include "GameProcessor.h"
+#include "game-processor.h"
 
-#include "GameSession.h"
-#include "GameSessionFactory.h"
+#include "game-session.h"
+#include "game-session-factory.h"
 
 #include <string>
 

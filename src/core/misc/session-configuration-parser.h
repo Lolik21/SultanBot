@@ -1,6 +1,6 @@
 #ifndef CORE_MISC_SESSION_CONFIGURATION_PARSER_H
 #define CORE_MISC_SESSION_CONFIGURATION_PARSER_H
-#include "SessionConfiguration.h"
+#include "session-configuration.h"
 
 #include <string>
 

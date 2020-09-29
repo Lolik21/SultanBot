@@ -1,4 +1,4 @@
-#include "SessionConfigurationParser.h"
+#include "session-configuration-parser.h"
 
 #include <Poco/JSON/Parser.h>
 #include <algorithm>

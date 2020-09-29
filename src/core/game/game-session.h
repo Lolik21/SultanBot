@@ -1,8 +1,8 @@
 #ifndef CORE_GAME_GAME_SESSION
 #define CORE_GAME_GAME_SESSION
 
-#include "misc/SessionConfiguration.h"
-#include "network/auth/AuthService.h"
+#include "misc/session-configuration.h"
+#include "network/auth/auth-service.h"
 #include <memory>
 
 namespace game {

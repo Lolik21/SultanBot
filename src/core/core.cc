@@ -1,7 +1,7 @@
 #include "include/Core.h"
 
-#include "game/GameProcessor.h"
-#include "misc/SessionConfigurationParser.h"
+#include "game/game-processor.h"
+#include "misc/session-configuration-parser.h"
 
 void createGameSession(const char *configuration) {
   try {
@@ -10,8 +10,7 @@ void createGameSession(const char *configuration) {
       game::GameProcessor::startGameSession(session);
     }
   } catch (std::exception &exception) {
-    std::cout << "The Error occured when creating a game session:\n";
-    std::cout << exception.what() << std::endl;
+    throw;
   }
 }
 
