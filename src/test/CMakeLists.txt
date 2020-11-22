@@ -1,10 +1,10 @@
-find_package(Boost COMPONENTS unit_test_framework REQUIRED)
+find_package(GTest REQUIRED)
 
-add_executable(CoreLibTests "unit-test-module.cc" "misc/session-configuration-parser-tests.cc")
+add_executable(CoreLibTests "unit-test-module.cc" "network/secure/ecdh-key-helper-tests.cc" 
+"network/secure/clinet-data-encoder-tests.cc" "network/secure/base64-encoder-tests.cc")
 
-target_link_libraries(CoreLibTests PRIVATE ${Boost_UNIT_TEST_FRAMEWORK_LIBRARY})
+target_link_libraries(CoreLibTests PRIVATE GTest::GTest GTest::Main)
 target_link_libraries(CoreLibTests PRIVATE CoreLib)
-target_include_directories(CoreLibTests PRIVATE ${Boost_INCLUDE_DIR})
 target_include_directories(CoreLibTests PRIVATE ../core)
 
-add_test(NAME CoreLibTests COMMAND CoreLibTests)
+gtest_add_tests(TARGET CoreLibTests)

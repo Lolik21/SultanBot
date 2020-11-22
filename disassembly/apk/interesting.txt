@@ -1,0 +1,1037 @@
+11-08 21:39:35.547 18797 20042 I Corona  : module(..., package.seeall)
+
+11-08 21:39:35.547 18797 20042 I Corona  : local netCfg = cfgManager["sceneCfg.netCfg"]
+
+11-08 21:39:35.547 18797 20042 I Corona  : local energyCfg = cfgManager["sceneCfg.energyCfg"]
+
+11-08 21:39:35.547 18797 20042 I Corona  : local NOTSHOWNETPRINT = false
+
+11-08 21:39:35.547 18797 20042 I Corona  : local IS_NEED_PRINT_LOOP_CMD = ISPRINT and BUILDVER -- хЬичЬЯцЬ║хМЕф╕КщЬАшжБцЙУхН░хЗ║цЙАцЬЙчЪДшп╖ц▒В
+
+11-08 21:39:35.547 18797 20042 I Corona  : local IS_SHORT_PRINT = false-- ф╜┐чФичоАцШУш╛УхЗ║
+
+11-08 21:39:35.547 18797 20042 I Corona  : local tMsgType = {
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	SEND_DATA = 1,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	NORMAL_RESPOND = 2,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	ERROR_NET = 3,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	ERROR_NOT_DATA = 4,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	ERROR_STATE = 5,
+
+11-08 21:39:35.547 18797 20042 I Corona  : }
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : --ф╕НхИЫх╗║щБоч╜йчЪДцОехПг
+
+11-08 21:39:35.547 18797 20042 I Corona  : local notLoadingActionIds = netCfg.notLoadingActionIds
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- ф╕НцПРчд║щФЩшппф┐бцБпчЪДцОехПг
+
+11-08 21:39:35.547 18797 20042 I Corona  : local notPromptError = netCfg.notPromptError
+
+11-08 21:39:35.547 18797 20042 I Corona  : --ф╕НцЙУхН░ш╛УхЗ║чЪДцОехПг
+
+11-08 21:39:35.547 18797 20042 I Corona  : local notPrintLogActionIds = netCfg.notPrintLogActionIds
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- ф╕НщЗНш┐ЮчЪДцОехПг
+
+11-08 21:39:35.547 18797 20042 I Corona  : local notReRequestIds = netCfg.notReRequestIds
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- цЙУчЬЯцЬ║хМЕхРОя╝Мф╕║ф║Жш░ГшпХцЦ╣ф╛┐я╝МщЬАшжБцЙУхН░цЙАцЬЙчЪДшп╖ц▒ВхТМхЫЮф╝а
+
+11-08 21:39:35.547 18797 20042 I Corona  : local function packPrint(msgType, tipStr, netModCmd, netData, extraInfo)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if (not ISPRINT) or NOTSHOWNETPRINT then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		return
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if IS_SHORT_PRINT then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if table.indexOf(notPrintLogActionIds, netModCmd) then return end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local info
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if msgType == tMsgType.SEND_DATA then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			print("\n++++++++++++++++++++params++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			info = tableUtils.fCopyTab( netData.data )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			info.RetailId, info.serverId, info.Sess, info.ActId, info.Ver, info.T, info.actionid, info.Token, info.appId, info.Lang = nil
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			info.ActivityId, info.isCross = nil
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		elseif msgType == tMsgType.NORMAL_RESPOND and netData.data then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			local data = json.decode(netData.data)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			info = data.Data or {}
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			info.SysTime, info.Cost = nil
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			info.RedPointData = nil
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			info.RedPoint = nil
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			-- for k,v in pairs{ "Cfg", "ActivityCfg" } do
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			-- 	if info[v] then info[v]="цЪВф╕НцЙУхН░" end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			-- end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if not next( info ) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				info.Info = data.Info
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				info.stack = data.stack
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			info = netData
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if msgType~=tMsgType.SEND_DATA then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			print("====================="..netModCmd.."==============================")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		logUtils.formatPrintTable( info )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		-- print( json.encode( info ) )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if msgType~=tMsgType.SEND_DATA then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			print("===================================================")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	else 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local netStr = ""
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if type(netData) == "string" then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			netStr = netData
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		elseif type(netData) == "table" then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			netStr = json.encode(netData) -- хоМцХ┤цХ░цНоцпФш╛ГщХ┐я╝Мф╜┐чФишбица╝х╝ПцЙУхН░хРОхП░цЙУхН░цХ░щЗПш┐Зхдзя╝МцЙАф╗ецЙУхН░хнЧчмжф╕▓
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		netStr = string.gsub(netStr, "\\", "")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if table.indexOf(notPrintLogActionIds, netModCmd) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if IS_NEED_PRINT_LOOP_CMD then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				print("")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				print("=============================================")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				print(tipStr, "cmd : ", netModCmd)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				print(netStr)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				print("extra infoя╝Ъ", extraInfo)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				print("=============================================")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			print("")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			print("=============================================")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			print(tipStr, "   cmd : ", netModCmd)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			print(netStr)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			print("extra infoя╝Ъ", extraInfo)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			print("=============================================")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- хИдцЦнцШпхРжшжБloading ш┐ФхЫЮtrue ф╕║щЬАшжБloading
+
+11-08 21:39:35.547 18797 20042 I Corona  : function getLoadingFlag(params)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local flag = true
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if params.data.notLoading or table.indexOf(notLoadingActionIds, params.data.actionid) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		flag = false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	return flag
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : local codeList = {}
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : local reActions = {}
+
+11-08 21:39:35.547 18797 20042 I Corona  : local getNewJwtFlag = false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : function setJwtFlag( flag )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	getNewJwtFlag = flag
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : function getJwtFlag( )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	return getNewJwtFlag
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : function getReActions( )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	return reActions
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : function cleanNetWork()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	-- щЬАшжБц╕Ечй║цОЙч╝УхнШчЪДшп╖ц▒В
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	reActions = {}
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	pushAdapter.disconnectPush()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	netAdapter.cancelAllRequest()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	netProtocol.cancelLoopAction() -- хоЪцЧ╢шп╖ц▒Вф╗╗хКб
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	uiManager.loading.clean()
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- щЗНчЩ╗
+
+11-08 21:39:35.547 18797 20042 I Corona  : function reLoginBox(errorStr, okListener)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	cleanNetWork()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local listener = function()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		reActions = {}
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		getNewJwtFlag = false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if okListener then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			okListener()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			modManager.loginMod.handleLogout()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	uiManager.netPopup.netErrorPopBox{ typeId=2, listener=listener, errorCode=errorStr }
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- цШпхРжх╝║цЫ┤ updateState  0: цЧащЬАцЫ┤цЦ░,  1: цПРчд║цШпхРжцЫ┤цЦ░,  2: х╝║хИ╢цЫ┤цЦ░
+
+11-08 21:39:35.547 18797 20042 I Corona  : local function isForceUpdate(forceUpdateInfo)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if not forceUpdateInfo.Version then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local updateState = gatewayAdapter.getUpdateState(tonumber(modManager.loginMod.getData("ver")), json.decode(forceUpdateInfo.Version))
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	return updateState == 2
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : local keepLoading
+
+11-08 21:39:35.547 18797 20042 I Corona  : local loadingCount = 6
+
+11-08 21:39:35.547 18797 20042 I Corona  : local connect_count = 0 -- щЗНш┐ЮцмбцХ░
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- шп╖ц▒ВщЗНш┐Ю
+
+11-08 21:39:35.547 18797 20042 I Corona  : function reRequest(params)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local notPop
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if not getLoadingFlag(params) then -- хЬиш╜ошпвцОехПгф╣ЛхЖЕчЪДцОехПгщЗНцЦ░шп╖ц▒В
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		notPop = true
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	elseif getLoadingFlag(params) and connect_count <= loadingCount then -- ш╜ошпвцОехПгф╣ЛхдЦчЪДцОехПгф╕Фш┐ЮцОецмбцХ░х░Пф║О5цмбчЪДщЗНш┐Ю
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		connect_count = connect_count + 1
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if notPop then -- ф╕Нх╝╣чкЧ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if table.indexOf( notReRequestIds, params.data.actionid ) then return end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		callFunc(params)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	elseif (connect_count > loadingCount) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		reLoginBox(params.code or "-1000")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if connect_count%2 == 1 then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			uiManager.loading.giveBackLoading({notRemoveLoading = true, markName = params.data.actionid})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			callFunc(params)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			return
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		uiManager.loading.giveBackLoading({markName = params.data.actionid})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		uiManager.netPopup.netErrorPopBox({
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			typeId = 1, 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			listener = function() return callFunc(params) end,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			errorCode = params.code,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		-- uiManager.netPopup.new(1, function() -- цЦнч║┐х╝╣чкЧ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		-- 	return callFunc(params)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		-- end)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- ш┐ЮцОец▒ачК╢цАБчаБхИдцЦн
+
+11-08 21:39:35.547 18797 20042 I Corona  : function connecttionCodeJudge(data, params)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if not data then -- ш┐ФхЫЮцХ░цНоцЬЙщФЩ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		reLoginBox("-1002")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	data.stat = tonumber(data.stat)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local isPass = gatewayAdapter.judgeCode( data, params )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	return isPass
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : --ца╣цНоцЬНхКбчлпцХ░цНоч╗Яф╕АхИ╖цЦ░ф╕Аф║ЫцЬАцЦ░ш╡Дц║Ря╝МхЕ╡хКЫя╝Мч▓ошНЙ, хЕГхоЭя╝МщУ╢ф╕дчнЙ
+
+11-08 21:39:35.547 18797 20042 I Corona  : function serverUpToData(response, actionId, sendData)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if response.RemainList then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		-- ф╕ЗшГ╜ц┤╗хКищБУхЕ╖хдДчРЖ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local activityData = modManager._universalActivitiesMod.getActivityInfo()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if next(activityData) ~= nil and activityData.ActivityId then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			for key, val in pairs(response.RemainList) do
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				if val.ActivityId and tonumber(val.ActivityId) == tonumber(activityData.ActivityId) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					modManager._universalActivitiesMod.setAttackItem(val)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		--[[ ц┤╗хКищБУхЕ╖ф╕Нх▒Юф║ОшГМхМЕщБУхЕ╖я╝МхЫацндф╕НхКахЕеховцИ╖члпцЬмхЬ░хЖЕхнШщБУхЕ╖я╝МшЛехКахЕечЪДшпЭф╝Ъхп╝шЗ┤ф╜┐чФиgamUiф╕нcreateRewardPromptцЦ╣ц│Хф╕Нф╝аawarddataцЧ╢щБУхЕ╖цШ╛чд║щФЩшппя╝МхЫаф╕║10000цОехПгф╕Нф╝Ъф╕ЛхПСц┤╗хКищБУхЕ╖
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		]]
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local tResources = {}
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		for k,v in pairs(response.RemainList) do
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if not v.ActivityId then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				tResources[#tResources + 1] = v
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		modManager._skinMod.setSkinData(tResources)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		modManager.localRedMod.setAllRedPoint(tResources)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		modManager._itemMod.setCurrRewardData(tResources, actionId)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		modManager._itemMod.setShowAwardList( response.FinalShowAwardCfg )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		-- цЛЫхЛЯц┤╗хКич║вчВ╣(ш┐ФхЫЮф╕╗хЬ║цЩпф╕Нф╕АхоЪф╝ЪщЗНчФ╗я╝МцЙАф╗ещБ┐хЕНхРОч╗нцЬЙцЦ░ц┤╗хКицИЦцЦ░хКЯшГ╜цЧ╢щБЧц╝Пц╖╗хКая╝МцХЕхКахЬицндхдДя╝Мш┐ЫшбМч╗Яф╕АхдДчРЖ)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		eventManager:dispatchEvent("mainLeftBtnRed", {key = "recruitmentActivity"})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local tRedPoint = response.RedPoint
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if tRedPoint then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		modManager.redPointMod.refreshRedPoint( tRedPoint )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		modManager._limitTimeMod.check_red_dot( tRedPoint ) --хИ╖цЦ░щЩРцЧ╢ц┤╗хКи
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if response.Extra then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if response.Extra["beauty"] then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			for i=1,#response.Extra["beauty"] do -- хЫ╜хКЫцПРхНЗшзгщФБхжГхнР
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				modManager._wivesMod.setWivesInfo(response.Extra["beauty"][i], "IsUnlock", 1 )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if response.Extra["mainTask"] then -- хоМцИРф╕╗ч║┐ф╗╗хКб
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			local tDatas = modManager._mainTaskMod.getMainTaskData()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			local tSeverData = modManager._mainTaskMod.getMainTaskSeverData()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			local temp = tDatas[tSeverData.taskId]
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if response.Extra["mainTask"] >= temp.RequireNum then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				if ( tSeverData.taskNum < temp.RequireNum) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					uiManager.common.lacePrompt( {title=langFile["MainTaskScene_MainTaskCompleteDialog_Tip"], tips=temp.MainTaskId.."."..temp.Name })
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		modManager._mainTaskMod.setMainTaskServerData(response.Extra) --чЩ╗х╜Хч╗ЩчЪДф╕╗ч║┐ф╗╗хКбф┐бцБп
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if response.VipChange then -- VIPхНЗч║зшо╛ч╜очЫ╕хЕ│цЬмхЬ░ч╝УхнШцЧ╢щЧ┤
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		modManager.roleMod.setRoleData("VigorTimeUnix", response.VipChange.VigorTimeUnix)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local childLogic = require("scene.childrenScene.childrenLogic")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		childLogic.setChildVigorTime(response.VipChange)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if energyCfg.checkActIds[actionId] then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local activityId = sendData.ActivityId
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local activityType = sendData.ActivityType
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		modManager["energy.energyMod"].mapActyCommonData(response, actionId, activityId, activityType)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- шо╛ч╜оcodelistя╝ИщАЪчЯецЬНхКбхЩицОецФ╢хИ░ф║Жц┤╗хКицХ░цНоя╝Й
+
+11-08 21:39:35.547 18797 20042 I Corona  : local function setCodeList(_data)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	for key, value in pairs(_data) do
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		for k, v in pairs(value) do
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if (tableUtils.checkIsInTable(codeList, v.CfgCode) == -1) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				codeList[#codeList + 1] = v.CfgCode
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : --хИащЩдcodelist
+
+11-08 21:39:35.547 18797 20042 I Corona  : local function deleteCodeList(_data)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	for k, v in pairs (_data) do
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local index = tableUtils.checkIsInTable(codeList, v.CfgCode)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if (index ~= -1) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			table.remove(codeList, index)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : -- шО╖хПЦцЙАцЬЙхПШхКиц┤╗хКичЪДnamelist
+
+11-08 21:39:35.547 18797 20042 I Corona  : local function getActivityNameList(_data)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local nameList = {}
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	for key, v in pairs(_data) do
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		nameList[#nameList + 1] = key
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	return nameList
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : local function judgeIsNeedMapServerData(params, actionId)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if table.indexOf({9010, 10000}, actionId) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	-- цЧзsdkф╕нхИЖхПСцЬНхКбцаЗшпЖ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if params.isDistribute then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	 -- цЦ░sdkф╕нхИЖхПСцЬНхКбцаЗшпЖ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if params.data and params.data.servicePath == gatewayAdapter.SERVER.GAMEROUTE then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	return true
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : local function isDistributeServer(params)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if params.isDistribute then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		return true
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if params.data and params.data.servicePath == gatewayAdapter.SERVER.GAMEROUTE then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		return true
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : local socket = require("socket")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : function callFunc(params)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local netModCmd = params.data.actionid
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local errorCallBackFunc = params.errorCallBackFunc
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local listener = nil
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	-- щШ▓цнвчЫ╕хРМчЪДшп╖ц▒Вф╕АчЫ┤хПС
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if reActions[tostring(netModCmd)] then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		return
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	packPrint(tMsgType.SEND_DATA, "send dataя╝Ъ", netModCmd, params, params.url)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local t0 = socket.gettime()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	listener = function(event)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local t1 = socket.gettime()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local lastTime = (t1 - t0) * 1000
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if getLoadingFlag(params) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			backUtils.enableBack() -- globalGroup.tCloseListener[#globalGroup.tCloseListener] = nil
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if params.loginCount ~= globalData.loginCount then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if getLoadingFlag(params) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				uiManager.loading.giveBackLoading({markName = netModCmd})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			return true
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		if ( event.isError ) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			packPrint(tMsgType.ERROR_NET, "error response dataя╝Ъ", netModCmd, event.response, "шо┐щЧоцЧ╢щЧ┤(ms) я╝Ъ " .. lastTime)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if (not logAdapter.isNetMonitorCmd(netModCmd)) and (not table.indexOf(notLoadingActionIds, netModCmd)) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				logAdapter.tryUploadNetLog({
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					useTime = lastTime,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					isErrorLog = true,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					actionId = netModCmd,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					errMsg = event.response,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					stateCode = event.status,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					url = event.url
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if logAdapter.isNetMonitorCmd(netModCmd) then -- ч╜Сч╗ЬщФЩшппцЧех┐Чф╕Кф╝аф╕НщЬАшжБщЗНш┐Ю
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				params.callBackFunc({isNetError = true})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				reRequest(params)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			local dataStr = event.response or ""
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			local data = json.decode( dataStr ) or {stat = 11003}
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			-- хИдцЦнчК╢цАБчаБ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if not connecttionCodeJudge(data, params) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				packPrint(tMsgType.ERROR_STATE, "stat error responseя╝Ъ", netModCmd, dataStr, "шо┐щЧоцЧ╢щЧ┤(ms) я╝Ъ " .. lastTime, params.url)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				return
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if (not logAdapter.isNetMonitorCmd(netModCmd)) and (not table.indexOf(notLoadingActionIds, netModCmd)) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				logAdapter.tryUploadNetLog({
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					useTime = lastTime,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					actionId = netModCmd,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					url = event.url
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			uiManager.loading.giveBackLoading({markName = netModCmd})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if getLoadingFlag(params) then -- ш╜ошпвф╣ЛхдЦчЪДцОехПгшо┐щЧоцИРхКЯ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				connect_count = 0
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			-- шзгхпЖуАБшзгхОЛ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			netAdapter.decrypt_decompress{ netModCmd=netModCmd, isDistribute=params.isDistribute, data=data }
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			packPrint(tMsgType.NORMAL_RESPOND, "response dataя╝Ъ", netModCmd, data, "шо┐щЧоцЧ╢щЧ┤(ms) я╝Ъ " .. lastTime)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			-- чЬЯхоЮш┐ФхЫЮцХ░цНо
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			local responseData
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if netModCmd == 9999 or netModCmd == 9998 then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				responseData = data
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				if data.data then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					responseData = json.decode(data.data)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					packPrint(tMsgType.ERROR_NOT_DATA, "not data.data event : ", netModCmd, event)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				-- цЦ░sdkцИРхКЯчЪДцЧ╢хАЩц▓бцЬЙdata.stat цЧзsdkхд▒ш┤ечЪДцЧ╢хАЩц▓бцЬЙdata.stat
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				if (data.stat and data.stat~=1) or ((not data.stat) and (not ISNEWSDK)) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				if responseData.Code == 0 then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					if not isDistributeServer(params) then -- 9004 9005 ф╝Ъф╕ЛхПСSessя╝Мф╜ЖцШпцШпхИЖхПСцЬНхКбя╝Мц▓бцЬЙSessчК╢цАБ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 						globalData.Sess = responseData.Sess
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					responseData = responseData.Data
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					if judgeIsNeedMapServerData(params, netModCmd) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 						serverUpToData(responseData, netModCmd, params.data)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					-- щЬАшжБх╝║цЫ┤я╝Мш╕вхЗ║чОйхо╢ ф╕║ф║ЖхЗПх░Сф╕ЛхПСхнЧцо╡я╝МцЩощАЪцОехПгф╕ЛхПСFUVхнЧцо╡ 9006 ф╝ЪшЗкх╖▒хдДчРЖя╝МхЗ║чО░х╝╣чкЧ
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					if responseData.FUV and netModCmd ~= 9006 then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 						if isForceUpdate({Version = responseData.FUV}) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 							reLoginBox("-1004")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 							return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 						end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				elseif responseData.Code == 1 then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					if errorCallBackFunc then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 						errorCallBackFunc(responseData)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					if (not table.indexOf(notPromptError, netModCmd)) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 						uiManager.common.prompt(responseData.Info)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				elseif responseData.Code == 2 then -- хМ║цЬНч╗┤цКд
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					local curScene = composer.getSceneName( "current" )
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					if curScene == "scene.login.loginScene" then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 						uiManager.common.prompt(langFile["Net_DataNetMod_CallFunc_Txt_Maintain"])
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 						uiManager.netPopup.reLoginPopBox(function() modManager.loginMod.handleLogout() end)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				elseif responseData.Code == 3 then -- щЗНчЩ╗
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					reLoginBox("-1003")
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					return false
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			if responseData then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				if responseData.SysTime then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 					globalData.SysTime = responseData.SysTime * 1000 - system.getTimer()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			-- ш░ГчФихЫЮш░Г
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--if responseData and responseData.ActivityCfgsRP and next(responseData.ActivityCfgsRP) and netModCmd ~= 9010 and netModCmd ~= 10000 then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--	-- щЬАшжБцЫ┤цЦ░ц┤╗хКицХ░цНо
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--	if netModCmd ~= 11901 then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--		modManager._settingCatchMod.start(responseData.ActivityCfgsRP, function()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--			params.callBackFunc(responseData)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--		end, true, netModCmd)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--	else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--		params.callBackFunc(responseData)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--	setCodeList(responseData.ActivityCfgsRP)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--	if (params.data.CfgCodeStr) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--		deleteCodeList(params.data.CfgCodeStr)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--else
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				codeList = {}
+
+11-08 21:39:35.547 18797 20042 I Corona  : 				params.callBackFunc(responseData)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			--end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	--хЫЮш░Гх╗╢ш┐Яя╝Мф╜Ьх╝КчФи
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	local function delayListener(event)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		timer.performWithDelay(_G.debugNetDelay, function()
+
+11-08 21:39:35.547 18797 20042 I Corona  : 			listener(event)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		end)
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	-- хИдцЦнцШпхРжцЬЙloading
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if getLoadingFlag(params) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		backUtils.disableBack() -- globalGroup.tCloseListener[#globalGroup.tCloseListener+1] = function() end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		local loading = uiManager.loading.applyLoading({markName = netModCmd})
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	if next(codeList) then
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		params.data.CfgCodeStr = codeList
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	end
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	netSendMod.request{
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		data = params.data,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		listener = _G.debugNetDelay and delayListener or listener,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		url = params.url,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		isDistribute = params.isDistribute,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		newSdkParams = params.newSdkParams,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		isCross = params.isCross,
+
+11-08 21:39:35.547 18797 20042 I Corona  : 		dataNetParams = params
+
+11-08 21:39:35.547 18797 20042 I Corona  : 	}
+
+11-08 21:39:35.547 18797 20042 I Corona  : end

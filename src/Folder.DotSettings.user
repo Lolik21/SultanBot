@@ -1,6 +1,182 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=010f9d7e_002D3503_002D4da4_002Dbbea_002D0aba6ad602d9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShoudlDecodeClientData #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShoudlDecodeClientData&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=03a78e94_002D75f7_002D4b61_002Db3df_002D0cb2e42fe311/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EncodeAndDecodeWithBinaryData" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeAndDecodeWithBinaryData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeAndDecodeTestValue&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeToSomeBinaryString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeSomeBinaryString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeTestString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeTestString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.EncodedAndDecodedValuesMustBeEqual&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShoudlDecodeClientData&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=08428b4b_002Df15d_002D477c_002D900a_002D07435773a12f/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShoudlDecodeClientData #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShoudlDecodeClientData&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=1aaff76a_002D8d02_002D4a50_002D8b20_002D792ece75869d/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="DecodeToSomeBinaryString #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeToSomeBinaryString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeAndDecodeWithBinaryData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientData&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=202cf596_002Dcc09_002D43fe_002Da154_002Defec46adc61a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EncodedAndDecodedValuesMustBeEqual #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.EncodedAndDecodedValuesMustBeEqual&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2a925b2e_002Df75b_002D4d2b_002D8468_002Dcaec8a80ee8b/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="DecodeToSomeBinaryString" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeToSomeBinaryString&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=35af2073_002Dc7a6_002D46fd_002D9de4_002D0da03cc47381/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="DecodeToSomeBinaryString #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeToSomeBinaryString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeAndDecodeTestValue&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=49a2a996_002Dbe1f_002D4525_002Da7aa_002D3df8f82d51be/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShouldEncodeClientData" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientData&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4a583815_002D0106_002D4d25_002D8534_002De1ca64f59feb/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShouldEncodeClientDataWithRealKeys" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientDataWithRealKeys&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=4d773314_002D8933_002D4257_002Da169_002D7dac9292fb73/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShouldEncodeClientDataWithRealKeys #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientDataWithRealKeys&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShoudlDecodeClientData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.Decode_TryDecode&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.EncodedAndDecodedValuesMustBeEqual&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=503fe2f0_002D047e_002D4e30_002Dafaf_002D2aeeb4f1011a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EncodeAndDecodeTestValue" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeAndDecodeTestValue&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeToSomeBinaryString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeSomeBinaryString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeTestString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeTestString&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=518f7ab1_002D3fc9_002D449b_002D99c0_002D0c1d6387f2a6/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Decode_TryDecode" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.Decode_TryDecode&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ECDHKeyHelper.Should_GeneratePublicKeySuccessfuly&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=55da2ebd_002Df60b_002D4ec3_002D842d_002Da7c38b51fca2/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="SessionConfigurationParserTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
     &lt;TestId&gt;BoostTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::SessionConfigurationParserTests&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5ba80430_002Db67f_002D4af7_002D9e6e_002Da1ede71cd10a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShoudlDecodeClientData #5" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShoudlDecodeClientData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.Decode_TryDecode&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientDataWithRealKeys&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=60ae659f_002D3d0d_002D4caa_002D9796_002Dac4e468706da/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="GetKeyFromPEMEncodedECDH_FromClientKey" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ECDHKeyHelper.GetKeyFromPEMEncodedECDH_FromClientKey&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ECDHKeyHelper.GetKeyFromPEMEncodedECDH_FromServerKey&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ECDHKeyHelper.GetKeyFromPEMEncodedECDH_ThrowsIfKeyIsInvalid&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.Decode_TryDecode&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=61b5c63d_002D123e_002D4d69_002Dae38_002Dd9caefd8bdf3/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EncodedAndDecodedValuesMustBeEqual" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.EncodedAndDecodedValuesMustBeEqual&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=6241dd53_002D53dc_002D4473_002Dab5e_002Ddc59a3af1c25/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Should_GeneratePublicKeySuccessfuly #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ECDHKeyHelper.Should_GeneratePublicKeySuccessfuly&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=725a3237_002D92ed_002D4b00_002D9f0c_002D4f40bd3f8525/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EncodeTestString" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeTestString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeTestString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeSomeBinaryString&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeToSomeBinaryString&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=74095573_002D6943_002D40eb_002D85b5_002Da589da4ef1e7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="DecodeToSomeBinaryString #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeToSomeBinaryString&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=87befd1d_002D76d1_002D469a_002D863a_002D683590bf4f46/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Should_GeneratePublicKeySuccessfuly #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeTestString&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=8c622bd8_002D2128_002D40b6_002Da66b_002D6f1883c9dfc0/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShouldEncodeClientDataWithRealKeys #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientDataWithRealKeys&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a110c3fb_002Db8fa_002D4f67_002Db92c_002Dd430c45b6d59/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="Should_GeneratePublicKeySuccessfuly" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ECDHKeyHelper.Should_GeneratePublicKeySuccessfuly&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a1afefec_002D3c39_002D4af2_002Daa54_002D1f89acdfa6e9/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="DecodeTestString" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeTestString&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a386d24b_002D1df2_002D487e_002Dabdf_002Dfff6c702a359/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShouldEncodeClientData #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientData&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=a75b70b7_002D1a18_002D4de9_002D8dfb_002Dc31cfaaed3d1/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShouldEncodeClientDataWithRealKeys #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientDataWithRealKeys&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=cea78f14_002D1add_002D4885_002D9714_002D3813fcc905d7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="DecodeToSomeBinaryString #3" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.DecodeToSomeBinaryString&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d59a6c47_002D998c_002D4974_002D911c_002D98983a65e611/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="EncodeAndDecodeTestValue #2" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::Base64Encoder.EncodeAndDecodeTestValue&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=daaeaaa5_002D1ce0_002D4639_002Db637_002D0e1abb9a2a5a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="ShoudlDecodeClientData #6" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShoudlDecodeClientData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientDataWithRealKeys&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientData&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e2f16e06_002D4a3b_002D4a92_002D8e46_002D1649bf428b22/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShoudlDecodeClientData" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShoudlDecodeClientData&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e5036a68_002Dcf8d_002D4c02_002D9f34_002Df23c71ed8414/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="ShoudlDecodeClientData #4" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShoudlDecodeClientData&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;GTest::DB94C55F-6B9A-4AAE-80D7-29FD8153E6B5::::ClientDataEncoder.ShouldEncodeClientDataWithRealKeys&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

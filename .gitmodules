@@ -1,3 +1,9 @@
 [submodule "vcpkg"]
 	path = vcpkg
 	url = https://github.com/Microsoft/vcpkg.git
+[submodule "disassembly/tools/corona-archiver"]
+	path = disassembly/tools/corona-archiver
+	url = https://github.com/0BuRner/corona-archiver.git
+[submodule "disassembly/tools/luadec"]
+	path = disassembly/tools/luadec
+	url = https://github.com/viruscamp/luadec

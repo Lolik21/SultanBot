@@ -3,6 +3,8 @@
 #include "session-configuration.h"
 
 #include <string>
+#include <vector>
+#include <memory>
 
 namespace misc {
 class SessionConfigurationParser {

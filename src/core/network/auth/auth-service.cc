@@ -2,17 +2,19 @@
 
 #include "misc/logger.h"
 #include "network/request-service.h"
+#include "network/secure/ecdh-key-helper.h"
 #include "tools/object-to-string.h"
 
 #include <Poco/Exception.h>
-#include <Poco/Crypto/OpenSSLInitializer.h>
 #include <Poco/JSON/Object.h>
 
 namespace network::auth {
 AuthService::AuthService(std::shared_ptr<models::AuthConfiguration> auth_configuration,
-                         std::shared_ptr<RequestService> request_service) {
+                         std::shared_ptr<RequestService> request_service,
+                         std::shared_ptr<secure::ECDHKeyHelper> ecdh_key_helper) {
   auth_configuration_ = std::move(auth_configuration);
   request_service_ = std::move(request_service);
+  ecdh_key_helper_ = std::move(ecdh_key_helper);
 }
 
 void AuthService::authenticate() {
@@ -34,7 +36,7 @@ void AuthService::authenticate() {
   }
 }
 
-Object::Ptr AuthService::makeJwtActionRequestBody() const noexcept(true) {
+Object::Ptr AuthService::makeJwtActionRequestBody() const noexcept(false) {
   Object::Ptr body_object(new Object());
   RequestService::fillDefaultObjectProperties(body_object);
 
@@ -43,12 +45,12 @@ Object::Ptr AuthService::makeJwtActionRequestBody() const noexcept(true) {
   body_object->set("user_id", auth_session_->user_id);
   body_object->set("act_id", "9999");
   // what a fuck this is coming from?
-  body_object->set("c_pub", "-----BEGIN PUBLIC KEY-----\nMIIBSzCCAQMGByqGSM49AgEwgfcCAQEwLAYHKoZIzj0BAQIhAP////8AAAABAAAA\nAAAAAAAAAAAA////////////////MFsEIP////8AAAABAAAAAAAAAAAAAAAA////\n///////////8BCBaxjXYqjqT57PrvVV2mIa8ZR0GsMxTsPY7zjw+J9JgSwMVAMSd\nNgiG5wSTamZ44ROdJreBn36QBEEEaxfR8uEsQkf4vOblY6RA8ncDfYEt6zOg9KE5\nRdiYwpZP40Li/hp/m47n60p8D54WK84zV2sxXs7LtkBoN79R9QIhAP////8AAAAA\n//////////+85vqtpxeehPO5ysL8YyVRAgEBA0IABPzotS3n9Dcn/C5CYnFKzZ00\nau1a2zNlMyfcwW5c34ExRL16cwNYggb0ieq0Qhmgn00T0uHraBAmA7oVJd3NKrQ=\n-----END PUBLIC KEY-----\n");
-
+  body_object->set("c_pub", ecdh_key_helper_->GetPublicKey());
+  std::cout << ecdh_key_helper_->GetPublicKey() << std::endl;
   return body_object;
 }
 
-Object::Ptr AuthService::makeTokenRequestBody() noexcept(true) {
+Object::Ptr AuthService::makeTokenRequestBody() noexcept(false) {
   Object::Ptr body_object(new Object());
   RequestService::fillDefaultObjectProperties(body_object);
   body_object->set("data", makeTokenRequestDataMember());
@@ -56,7 +58,7 @@ Object::Ptr AuthService::makeTokenRequestBody() noexcept(true) {
   return body_object;
 }
 
-std::string AuthService::makeTokenRequestDataMember() noexcept(true) {
+std::string AuthService::makeTokenRequestDataMember() noexcept(false) {
   Object data_object;
   data_object.set("lang", "ru");
   data_object.set("RetailId", 2);

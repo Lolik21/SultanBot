@@ -5,9 +5,10 @@ namespace game
 std::unique_ptr<GameSession> GameSessionFactory::createGameSession(
     const std::shared_ptr<misc::SessionConfiguration> &session_configuration)
 {
+  const auto ecdh_key_helper = std::make_shared<network::secure::ECDHKeyHelper>();
   const auto auth_configuration = std::make_shared<network::auth::models::AuthConfiguration>(session_configuration);
   const auto request_service = std::make_shared<network::RequestService>(auth_configuration);
-  const auto auth_service = std::make_shared<network::auth::AuthService>(auth_configuration, request_service);
+  const auto auth_service = std::make_shared<network::auth::AuthService>(auth_configuration, request_service, ecdh_key_helper);
   return std::make_unique<GameSession>(session_configuration, auth_service);
 }
 }
