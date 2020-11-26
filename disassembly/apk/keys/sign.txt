@@ -1,1 +1,0 @@
-jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore debug-key.jks "c:\WORK\SultanBot\disassembly\apk\com.dc.hwsj\dist\com.dc.hwsj.apk" debug-keystore
