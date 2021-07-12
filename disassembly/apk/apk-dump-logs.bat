@@ -1,0 +1,1 @@
+adb logcat -d > ./logs/sultan-logfile.log
